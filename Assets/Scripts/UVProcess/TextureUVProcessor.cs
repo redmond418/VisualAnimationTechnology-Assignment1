@@ -64,7 +64,19 @@ namespace VAT
                 for (int i = 0; i < textureWidth; i++)
                 {
                     int originIndex = i + j * textureWidth;
-                    int indexOffset = Mathf.FloorToInt(sourcePixels[originIndex].r / 255 * Time.time * 20);
+                    int uvIndex = originIndex;
+                    if(Random.Range(0, 256) < sourcePixels[originIndex].r) uvIndex = Random.Range(0, textureWidth * textureHeight);
+                    pixelsCache[originIndex] = savedUVPixels[uvIndex];
+                }
+            }
+            pixelsCache.CopyTo(savedUVPixels, 0);
+
+            for (int j = 0; j < textureHeight; j++)
+            {
+                for (int i = 0; i < textureWidth; i++)
+                {
+                    int originIndex = i + j * textureWidth;
+                    int indexOffset = Mathf.FloorToInt(sourcePixels[originIndex].g / 255f * Time.time * 20);
                     int uvIndex = (i + 0) % textureWidth + ((j + indexOffset) % textureHeight) * textureWidth;
                     pixelsCache[originIndex] = savedUVPixels[uvIndex];
                 }
