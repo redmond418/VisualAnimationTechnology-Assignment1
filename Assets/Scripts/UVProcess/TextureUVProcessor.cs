@@ -19,6 +19,8 @@ namespace VAT
         private int textureWidth;
         private int textureHeight;
 
+        private float previousTime;
+
         private bool ValidateTexturePropertyName(string texturePropertyName)
             => processedRenderer != null && processedRenderer.sharedMaterial.HasTexture(texturePropertyName);
 
@@ -59,28 +61,34 @@ namespace VAT
             Color32[] sourcePixels = sourceCache.GetPixels32();
 
             // ピクセル情報を元にUVをぐりぐりする
+            float currentTime = Time.time;
+            int delta = Mathf.FloorToInt((currentTime - previousTime) * 20);
+            if (delta > 0) previousTime = currentTime;
+
+            savedUVPixels.CopyTo(pixelsCache, 0);
             for (int j = 0; j < textureHeight; j++)
             {
                 for (int i = 0; i < textureWidth; i++)
                 {
                     int originIndex = i + j * textureWidth;
-                    int uvIndex = originIndex;
-                    if(Random.Range(0, 256) < sourcePixels[originIndex].r) uvIndex = Random.Range(0, textureWidth * textureHeight);
-                    pixelsCache[originIndex] = savedUVPixels[uvIndex];
+                    int indexOffset = Mathf.FloorToInt(sourcePixels[originIndex].g / 255f * delta);
+                    int uvIndex = ModLoop(i + 0, textureWidth) + ModLoop(j + indexOffset, textureHeight) * textureWidth;
+                    if (sourcePixels[uvIndex].g != sourcePixels[originIndex].g) uvIndex = Random.Range(0, textureWidth * textureHeight);
+                    pixelsCache[originIndex] = pixelsCache[uvIndex];
                 }
             }
-            pixelsCache.CopyTo(savedUVPixels, 0);
 
             for (int j = 0; j < textureHeight; j++)
             {
                 for (int i = 0; i < textureWidth; i++)
                 {
                     int originIndex = i + j * textureWidth;
-                    int indexOffset = Mathf.FloorToInt(sourcePixels[originIndex].g / 255f * Time.time * 20);
-                    int uvIndex = (i + 0) % textureWidth + ((j + indexOffset) % textureHeight) * textureWidth;
-                    pixelsCache[originIndex] = savedUVPixels[uvIndex];
+                    int uvIndex = originIndex;
+                    if (Random.Range(0, 256) < sourcePixels[originIndex].r) uvIndex = Random.Range(0, textureWidth * textureHeight);
+                    pixelsCache[originIndex] = pixelsCache[uvIndex];
                 }
             }
+            pixelsCache.CopyTo(savedUVPixels, 0);
 
             // 変更したUV情報をTextureに保存(Applyを忘れずに!)
             processedTexture.SetPixels32(pixelsCache);
@@ -89,7 +97,7 @@ namespace VAT
             rendererMaterial.SetTexture(texturePropertyName, processedTexture);
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             if (Application.isPlaying)
             {
@@ -103,6 +111,13 @@ namespace VAT
                 DestroyImmediate(sourceCache);
                 DestroyImmediate(rendererMaterial);
             }
+        }
+
+        private static int ModLoop(int a, int b)
+        {
+            int mod = a % b;
+            if (mod < 0) mod += b;
+            return mod;
         }
     }
 }
