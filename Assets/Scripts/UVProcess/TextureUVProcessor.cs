@@ -46,13 +46,19 @@ namespace VAT
 
         private void Update()
         {
-            RenderTexture currentRT = RenderTexture.active;
+            // RenderTextureのピクセル情報をTextureに転写する
+            // 現在アクティブなRenderTextureを読み取りたいものに変更する
+            RenderTexture currentRTCache = RenderTexture.active;
             RenderTexture.active = sourceRenderTexture;
+            // ReadPixelsでアクティブなRenderTextureのピクセル情報をTextureに転写(Applyを忘れずに!)
             sourceCache.ReadPixels(new Rect(0, 0, sourceCache.width, sourceCache.height), 0, 0);
             sourceCache.Apply();
-            RenderTexture.active = currentRT;
+            RenderTexture.active = currentRTCache;
 
+            // Textureのピクセル情報を1列の配列に移す
             Color32[] sourcePixels = sourceCache.GetPixels32();
+
+            // ピクセル情報を元にUVをぐりぐりする
             for (int j = 0; j < textureHeight; j++)
             {
                 for (int i = 0; i < textureWidth; i++)
@@ -64,10 +70,9 @@ namespace VAT
                 }
             }
 
+            // 変更したUV情報をTextureに保存(Applyを忘れずに!)
             processedTexture.SetPixels32(pixelsCache);
             processedTexture.Apply();
-            print(savedUVPixels[0] + ", " + savedUVPixels[textureWidth - 1] + ", \n" +
-                savedUVPixels[(textureHeight - 1) * textureWidth] + ", " + savedUVPixels[textureWidth * textureHeight - 1]);
 
             rendererMaterial.SetTexture(texturePropertyName, processedTexture);
         }
