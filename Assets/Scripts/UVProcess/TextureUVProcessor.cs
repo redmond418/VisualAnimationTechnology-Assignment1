@@ -83,9 +83,9 @@ namespace VAT
                 for (int i = 0; i < textureWidth; i++)
                 {
                     int originIndex = i + j * textureWidth;
-                    int uvIndex = originIndex;
-                    if (Random.Range(0, 256) < sourcePixels[originIndex].r) uvIndex = Random.Range(0, textureWidth * textureHeight);
-                    pixelsCache[originIndex] = pixelsCache[uvIndex];
+                    Color32 uv = pixelsCache[originIndex];
+                    if (Random.Range(0, 256) < sourcePixels[originIndex].r) uv = new((byte)Random.Range(0, 256), (byte)Random.Range(0, 256), 0, 255);
+                    pixelsCache[originIndex] = uv;
                 }
             }
             pixelsCache.CopyTo(savedUVPixels, 0);
