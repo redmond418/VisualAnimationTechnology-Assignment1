@@ -20,6 +20,8 @@ namespace VAT
         private int textureHeight;
 
         private float previousTime;
+        private float[] previousTimeArray = new float[256];
+        private int[] deltas = new int[256];
 
         private bool ValidateTexturePropertyName(string texturePropertyName)
             => processedRenderer != null && processedRenderer.sharedMaterial.HasTexture(texturePropertyName);
@@ -44,6 +46,11 @@ namespace VAT
                     savedUVPixels[i + j * textureWidth] = new((byte)i, (byte)j, 0, 255);
                 }
             }
+            float currentTime = Time.time;
+            for (int i = 0; i < previousTimeArray.Length; i++)
+            {
+                previousTimeArray[i] = currentTime;
+            }
         }
 
         private void Update()
@@ -62,8 +69,11 @@ namespace VAT
 
             // ピクセル情報を元にUVをぐりぐりする
             float currentTime = Time.time;
-            int delta = Mathf.FloorToInt((currentTime - previousTime) * 20);
-            if (delta > 0) previousTime = currentTime;
+            for (int i = 0; i < previousTimeArray.Length; i++)
+            {
+                deltas[i] = Mathf.FloorToInt((currentTime - previousTimeArray[i]) * i / 2f);
+                if (deltas[i] > 0) previousTimeArray[i] = currentTime;
+            }
 
             savedUVPixels.CopyTo(pixelsCache, 0);
             for (int j = 0; j < textureHeight; j++)
@@ -71,8 +81,8 @@ namespace VAT
                 for (int i = 0; i < textureWidth; i++)
                 {
                     int originIndex = i + j * textureWidth;
-                    int indexOffset = Mathf.FloorToInt(sourcePixels[originIndex].g / 255f * delta);
-                    int uvIndex = ModLoop(i + 0, textureWidth) + ModLoop(j + indexOffset, textureHeight) * textureWidth;
+                    int indexOffset = Mathf.FloorToInt(deltas[sourcePixels[originIndex].g]);
+                    int uvIndex = XYToIndex(i, j + indexOffset);
                     if (sourcePixels[uvIndex].g != sourcePixels[originIndex].g) uvIndex = Random.Range(0, textureWidth * textureHeight);
                     pixelsCache[originIndex] = pixelsCache[uvIndex];
                 }
@@ -111,6 +121,13 @@ namespace VAT
                 DestroyImmediate(sourceCache);
                 DestroyImmediate(rendererMaterial);
             }
+        }
+
+        private int XYToIndex(int x, int y, int width = 0, int height = 0)
+        {
+            if (width == 0) width = textureWidth;
+            if (height == 0) height = textureHeight;
+            return ModLoop(x, width) + ModLoop(y, height) * width;
         }
 
         private static int ModLoop(int a, int b)
