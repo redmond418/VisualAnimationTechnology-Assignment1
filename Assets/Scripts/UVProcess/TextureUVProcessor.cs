@@ -71,22 +71,39 @@ namespace VAT
             float currentTime = Time.time;
             for (int i = 0; i < previousTimeArray.Length; i++)
             {
-                deltas[i] = Mathf.FloorToInt((currentTime - previousTimeArray[i]) * i / 2f);
-                if (deltas[i] > 0) previousTimeArray[i] = currentTime;
+                int fromCenter = i - 128;
+                deltas[i] = Mathf.FloorToInt((currentTime - previousTimeArray[i]) * fromCenter);
+                if (deltas[i] != 0) previousTimeArray[i] = currentTime;
             }
 
             savedUVPixels.CopyTo(pixelsCache, 0);
+
             for (int j = 0; j < textureHeight; j++)
             {
                 for (int i = 0; i < textureWidth; i++)
                 {
                     int originIndex = i + j * textureWidth;
-                    int indexOffset = Mathf.FloorToInt(deltas[sourcePixels[originIndex].g]);
-                    int uvIndex = XYToIndex(i, j + indexOffset);
-                    if (sourcePixels[uvIndex].g != sourcePixels[originIndex].g) uvIndex = Random.Range(0, textureWidth * textureHeight);
-                    pixelsCache[originIndex] = pixelsCache[uvIndex];
+                    int indexOffset = deltas[sourcePixels[originIndex][0]];
+                    int uvIndex = XYToIndex(i - indexOffset, j);
+                    if (sourcePixels[uvIndex][0] != sourcePixels[originIndex][0]) uvIndex = Random.Range(0, textureWidth * textureHeight);
+                    pixelsCache[originIndex] = savedUVPixels[uvIndex];
                 }
             }
+            pixelsCache.CopyTo(savedUVPixels, 0);
+
+            for (int j = 0; j < textureHeight; j++)
+            {
+                for (int i = 0; i < textureWidth; i++)
+                {
+                    int originIndex = i + j * textureWidth;
+                    int indexOffset = deltas[sourcePixels[originIndex][1]];
+                    int uvIndex = XYToIndex(i, j - indexOffset);
+                    // if (originIndex != uvIndex) print(indexOffset);
+                    if (sourcePixels[uvIndex][1] != sourcePixels[originIndex][1]) uvIndex = Random.Range(0, textureWidth * textureHeight);
+                    pixelsCache[originIndex] = savedUVPixels[uvIndex];
+                }
+            }
+            pixelsCache.CopyTo(savedUVPixels, 0);
 
             for (int j = 0; j < textureHeight; j++)
             {
@@ -94,7 +111,7 @@ namespace VAT
                 {
                     int originIndex = i + j * textureWidth;
                     Color32 uv = pixelsCache[originIndex];
-                    if (Random.Range(0, 256) < sourcePixels[originIndex].r) uv = new((byte)Random.Range(0, 256), (byte)Random.Range(0, 256), 0, 255);
+                    if (Random.Range(0, 256) < sourcePixels[originIndex][2]) uv = new((byte)Random.Range(0, 256), (byte)Random.Range(0, 256), 0, 255);
                     pixelsCache[originIndex] = uv;
                 }
             }
