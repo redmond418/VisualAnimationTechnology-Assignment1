@@ -10,6 +10,7 @@ namespace VAT
         [SerializeField] private Renderer processedRenderer;
         [SerializeField, ValidateInput(nameof(ValidateTexturePropertyName), "The property is invalid!")] private string texturePropertyName = "_Texture2D";
         [SerializeField] private DeltaBufferContainer256 deltaBuffer;
+        [SerializeField] private StepScrollProcessElement stepScrollProcessElement;
 
         private Material rendererMaterial;
         private Texture2D processedTexture;
@@ -76,21 +77,23 @@ namespace VAT
                 savedUVPixels = savedUVPixels,
                 pixelsCache = pixelsCache,
                 processedUVPixels = processedUVPixels,
+                currentTime = currentTime,
             };
 
-            for (int j = 0; j < textureHeight; j++)
-            {
-                for (int i = 0; i < textureWidth; i++)
-                {
-                    int originIndex = i + j * textureWidth;
-                    int indexOffset = deltaBuffer.DeltaBuffer.Deltas[sourcePixels[originIndex][0]];
-                    int uvIndex = XYToIndex(i - indexOffset, j);
-                    if (sourcePixels[uvIndex][0] != sourcePixels[originIndex][0]) uvIndex = Random.Range(0, textureWidth * textureHeight);
-                    pixelsCache[originIndex] = savedUVPixels[uvIndex];
-                }
-            }
-            pixelsCache.CopyTo(processedUVPixels, 0);
-            pixelsCache.CopyTo(savedUVPixels, 0);
+            // for (int j = 0; j < textureHeight; j++)
+            // {
+            //     for (int i = 0; i < textureWidth; i++)
+            //     {
+            //         int originIndex = i + j * textureWidth;
+            //         int indexOffset = deltaBuffer.DeltaBuffer.Deltas[sourcePixels[originIndex][0]];
+            //         int uvIndex = XYToIndex(i - indexOffset, j);
+            //         if (sourcePixels[uvIndex][0] != sourcePixels[originIndex][0]) uvIndex = Random.Range(0, textureWidth * textureHeight);
+            //         pixelsCache[originIndex] = savedUVPixels[uvIndex];
+            //     }
+            // }
+            // pixelsCache.CopyTo(processedUVPixels, 0);
+            // pixelsCache.CopyTo(savedUVPixels, 0);
+            stepScrollProcessElement.ProcessUV(context);
 
             for (int j = 0; j < textureHeight; j++)
             {

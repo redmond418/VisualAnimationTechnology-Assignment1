@@ -29,5 +29,15 @@ namespace VAT
             this.processedUVPixels = processedUVPixels;
             this.currentTime = currentTime;
         }
+
+        public void CacheToProcessedUV()
+        {
+            pixelsCache.CopyTo(processedUVPixels, 0);
+        }
+
+        public void SaveUV()
+        {
+            pixelsCache.CopyTo(savedUVPixels, 0);
+        }
     }
 }

@@ -42,8 +42,8 @@ namespace VAT
     [Serializable]
     public class DeltaBufferContainer256
     {
-        [SerializeField] private int center;
-        [SerializeField] private float speed;
+        [SerializeField] private int center = 128;
+        [SerializeField] private float speed = 1;
         private DeltaBuffer deltaBuffer;
 
         public DeltaBuffer DeltaBuffer
