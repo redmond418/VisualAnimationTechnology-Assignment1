@@ -33,7 +33,7 @@ namespace VAT
             for (int i = 0; i < previousTimeArray.Length; i++)
             {
                 int fromCenter = i - center;
-                deltas[i] = Mathf.FloorToInt((currentTime - previousTimeArray[i]) * fromCenter * speed);
+                deltas[i] = (int)((currentTime - previousTimeArray[i]) * fromCenter * speed);
                 if (deltas[i] != 0) previousTimeArray[i] = currentTime;
             }
         }
@@ -43,7 +43,7 @@ namespace VAT
     public class DeltaBufferContainer256
     {
         [SerializeField] private int center;
-        [SerializeField] private int speed;
+        [SerializeField] private float speed;
         private DeltaBuffer deltaBuffer;
 
         public DeltaBuffer DeltaBuffer

@@ -9,6 +9,7 @@ namespace VAT
         [SerializeField] private RenderTexture sourceRenderTexture;
         [SerializeField] private Renderer processedRenderer;
         [SerializeField, ValidateInput(nameof(ValidateTexturePropertyName), "The property is invalid!")] private string texturePropertyName = "_Texture2D";
+        [SerializeField] private DeltaBufferContainer256 deltaBuffer;
 
         private Material rendererMaterial;
         private Texture2D processedTexture;
@@ -19,9 +20,6 @@ namespace VAT
 
         private int textureWidth;
         private int textureHeight;
-
-        private float[] previousTimeArray = new float[256];
-        private int[] deltas = new int[256];
 
         private bool ValidateTexturePropertyName(string texturePropertyName)
             => processedRenderer != null && processedRenderer.sharedMaterial.HasTexture(texturePropertyName);
@@ -48,10 +46,6 @@ namespace VAT
                 }
             }
             float currentTime = Time.time;
-            for (int i = 0; i < previousTimeArray.Length; i++)
-            {
-                previousTimeArray[i] = currentTime;
-            }
         }
 
         private void Update()
@@ -70,12 +64,7 @@ namespace VAT
 
             // ピクセル情報を元にUVをぐりぐりする
             float currentTime = Time.time;
-            for (int i = 0; i < previousTimeArray.Length; i++)
-            {
-                int fromCenter = i - 128;
-                deltas[i] = Mathf.FloorToInt((currentTime - previousTimeArray[i]) * fromCenter);
-                if (deltas[i] != 0) previousTimeArray[i] = currentTime;
-            }
+            deltaBuffer.DeltaBuffer.Update(currentTime);
 
             savedUVPixels.CopyTo(pixelsCache, 0);
 
@@ -94,7 +83,7 @@ namespace VAT
                 for (int i = 0; i < textureWidth; i++)
                 {
                     int originIndex = i + j * textureWidth;
-                    int indexOffset = deltas[sourcePixels[originIndex][0]];
+                    int indexOffset = deltaBuffer.DeltaBuffer.Deltas[sourcePixels[originIndex][0]];
                     int uvIndex = XYToIndex(i - indexOffset, j);
                     if (sourcePixels[uvIndex][0] != sourcePixels[originIndex][0]) uvIndex = Random.Range(0, textureWidth * textureHeight);
                     pixelsCache[originIndex] = savedUVPixels[uvIndex];
@@ -108,7 +97,7 @@ namespace VAT
                 for (int i = 0; i < textureWidth; i++)
                 {
                     int originIndex = i + j * textureWidth;
-                    int indexOffset = deltas[sourcePixels[originIndex][1]];
+                    int indexOffset = deltaBuffer.DeltaBuffer.Deltas[sourcePixels[originIndex][1]];
                     int uvIndex = XYToIndex(i, j - indexOffset);
                     if (sourcePixels[uvIndex][1] != sourcePixels[originIndex][1]) uvIndex = Random.Range(0, textureWidth * textureHeight);
                     pixelsCache[originIndex] = savedUVPixels[uvIndex];

@@ -10,7 +10,7 @@ namespace VAT
         public Color32[] savedUVPixels;
         public Color32[] pixelsCache;
         public Color32[] processedUVPixels;
-        public int[] deltas;
+        public float currentTime;
 
         public ProcessContext(
             int textureWidth,
@@ -19,7 +19,7 @@ namespace VAT
             Color32[] savedUVPixels,
             Color32[] pixelsCache,
             Color32[] processedUVPixels,
-            int[] deltas)
+            float currentTime)
         {
             this.textureWidth = textureWidth;
             this.textureHeight = textureHeight;
@@ -27,7 +27,7 @@ namespace VAT
             this.savedUVPixels = savedUVPixels;
             this.pixelsCache = pixelsCache;
             this.processedUVPixels = processedUVPixels;
-            this.deltas = deltas;
+            this.currentTime = currentTime;
         }
     }
 }
