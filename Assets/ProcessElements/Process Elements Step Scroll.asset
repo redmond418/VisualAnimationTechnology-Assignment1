@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b329bd606d75247a380c1a1e8a2d9119, type: 3}
+  m_Name: Process Elements Step Scroll
+  m_EditorClassIdentifier: 
+  elements:
+  - rid: 4984271075532079188
+  - rid: 4984271075532079189
+  - rid: 4984271075532079190
+  references:
+    version: 2
+    RefIds:
+    - rid: 4984271075532079188
+      type: {class: StepScrollProcessElement, ns: VAT, asm: Assembly-CSharp}
+      data:
+        sourceColor: 0
+        scrollAxis: 0
+        deltaBuffer:
+          center: 128
+          speed: 1
+    - rid: 4984271075532079189
+      type: {class: StepScrollProcessElement, ns: VAT, asm: Assembly-CSharp}
+      data:
+        sourceColor: 1
+        scrollAxis: 1
+        deltaBuffer:
+          center: 128
+          speed: 1
+    - rid: 4984271075532079190
+      type: {class: StepRandomizeProcessElement, ns: VAT, asm: Assembly-CSharp}
+      data:
+        sourceColor: 2

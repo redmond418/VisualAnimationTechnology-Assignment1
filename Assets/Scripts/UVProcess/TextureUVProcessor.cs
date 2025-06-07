@@ -10,8 +10,7 @@ namespace VAT
         [SerializeField] private Renderer processedRenderer;
         [SerializeField, ValidateInput(nameof(ValidateTexturePropertyName), "The property is invalid!")] private string texturePropertyName = "_Texture2D";
         [SerializeField] private DeltaBufferContainer256 deltaBuffer;
-        [SerializeField] private StepScrollProcessElement stepScrollProcessElement;
-        [SerializeField] private StepRandomizeProcessElement stepRandomizeProcessElement;
+        [SerializeField, InlineEditor] private ProcessElementsGroup processElementsGroup;
 
         private Material rendererMaterial;
         private Texture2D processedTexture;
@@ -49,6 +48,8 @@ namespace VAT
             }
             savedUVPixels.CopyTo(processedUVPixels, 0);
             float currentTime = Time.time;
+
+            ChangeElements(processElementsGroup);
         }
 
         private void Update()
@@ -82,36 +83,7 @@ namespace VAT
                 currentTime = currentTime,
             };
 
-            // for (int j = 0; j < textureHeight; j++)
-            // {
-            //     for (int i = 0; i < textureWidth; i++)
-            //     {
-            //         int originIndex = i + j * textureWidth;
-            //         int indexOffset = deltaBuffer.DeltaBuffer.Deltas[sourcePixels[originIndex][0]];
-            //         int uvIndex = XYToIndex(i - indexOffset, j);
-            //         if (sourcePixels[uvIndex][0] != sourcePixels[originIndex][0]) uvIndex = Random.Range(0, textureWidth * textureHeight);
-            //         pixelsCache[originIndex] = savedUVPixels[uvIndex];
-            //     }
-            // }
-            // pixelsCache.CopyTo(processedUVPixels, 0);
-            // pixelsCache.CopyTo(savedUVPixels, 0);
-            stepScrollProcessElement.ProcessUV(context);
-
-            for (int j = 0; j < textureHeight; j++)
-            {
-                for (int i = 0; i < textureWidth; i++)
-                {
-                    int originIndex = i + j * textureWidth;
-                    int indexOffset = deltaBuffer.DeltaBuffer.Deltas[sourcePixels[originIndex][1]];
-                    int uvIndex = XYToIndex(i, j - indexOffset);
-                    if (sourcePixels[uvIndex][1] != sourcePixels[originIndex][1]) uvIndex = Random.Range(0, textureWidth * textureHeight);
-                    pixelsCache[originIndex] = savedUVPixels[uvIndex];
-                }
-            }
-            pixelsCache.CopyTo(processedUVPixels, 0);
-            pixelsCache.CopyTo(savedUVPixels, 0);
-
-            stepRandomizeProcessElement.ProcessUV(context);
+            processElementsGroup.ProcessAll(context);
 
             // 変更したUV情報をTextureに保存(Applyを忘れずに!)
             processedTexture.SetPixels32(processedUVPixels);
@@ -136,18 +108,10 @@ namespace VAT
             }
         }
 
-        private int XYToIndex(int x, int y, int width = 0, int height = 0)
+        public void ChangeElements(ProcessElementsGroup processElementsGroup)
         {
-            if (width == 0) width = textureWidth;
-            if (height == 0) height = textureHeight;
-            return ModLoop(x, width) + ModLoop(y, height) * width;
-        }
-
-        private static int ModLoop(int a, int b)
-        {
-            int mod = a % b;
-            if (mod < 0) mod += b;
-            return mod;
+            this.processElementsGroup = processElementsGroup;
+            processElementsGroup.ResetTimeAll(Time.time);
         }
     }
 }
