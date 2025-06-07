@@ -10849,6 +10849,18 @@ MonoBehaviour:
   connectSamePoints: 1
   positions:
   - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
+  - {x: -1.75, y: -0.37}
   endCapDivisionCount: 8
   endCapStretch: 1
   cornerMode: 2
@@ -12399,6 +12411,8 @@ MonoBehaviour:
     deltaBuffer:
       center: 128
       speed: 1
+  stepRandomizeProcessElement:
+    sourceColor: 2
 --- !u!4 &1471197580
 Transform:
   m_ObjectHideFlags: 0
@@ -12727,6 +12741,18 @@ MonoBehaviour:
   thickness: 0.4
   connectSamePoints: 1
   positions:
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
+  - {x: -0.11, y: 1.8700001}
   - {x: -0.11, y: 1.8700001}
   endCapDivisionCount: 8
   endCapStretch: 1

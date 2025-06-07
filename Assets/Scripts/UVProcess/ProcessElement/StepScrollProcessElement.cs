@@ -23,7 +23,7 @@ namespace VAT
                     int uvIndex = UVProcessUtil.XYToIndex(i - indexOffset.x, j - indexOffset.y, context.textureWidth, context.textureHeight);
                     if (context.sourcePixels[uvIndex][(int)sourceColor] != context.sourcePixels[originIndex][(int)sourceColor])
                         uvIndex = UnityEngine.Random.Range(0, context.textureWidth * context.textureHeight);
-                    context.pixelsCache[originIndex] = context.savedUVPixels[uvIndex];
+                    context.pixelsCache[originIndex] = context.processedUVPixels[uvIndex];
                 }
             }
             context.CacheToProcessedUV();

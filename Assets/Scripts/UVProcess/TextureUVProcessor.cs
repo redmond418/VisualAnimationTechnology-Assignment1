@@ -11,6 +11,7 @@ namespace VAT
         [SerializeField, ValidateInput(nameof(ValidateTexturePropertyName), "The property is invalid!")] private string texturePropertyName = "_Texture2D";
         [SerializeField] private DeltaBufferContainer256 deltaBuffer;
         [SerializeField] private StepScrollProcessElement stepScrollProcessElement;
+        [SerializeField] private StepRandomizeProcessElement stepRandomizeProcessElement;
 
         private Material rendererMaterial;
         private Texture2D processedTexture;
@@ -46,6 +47,7 @@ namespace VAT
                     savedUVPixels[i + j * textureWidth] = new((byte)i, (byte)j, 0, 255);
                 }
             }
+            savedUVPixels.CopyTo(processedUVPixels, 0);
             float currentTime = Time.time;
         }
 
@@ -109,18 +111,7 @@ namespace VAT
             pixelsCache.CopyTo(processedUVPixels, 0);
             pixelsCache.CopyTo(savedUVPixels, 0);
 
-            for (int j = 0; j < textureHeight; j++)
-            {
-                for (int i = 0; i < textureWidth; i++)
-                {
-                    int originIndex = i + j * textureWidth;
-                    Color32 uv = pixelsCache[originIndex];
-                    if (Random.Range(0, 256) < sourcePixels[originIndex][2]) uv = new((byte)Random.Range(0, 256), (byte)Random.Range(0, 256), 0, 255);
-                    pixelsCache[originIndex] = uv;
-                }
-            }
-            pixelsCache.CopyTo(processedUVPixels, 0);
-            pixelsCache.CopyTo(savedUVPixels, 0);
+            stepRandomizeProcessElement.ProcessUV(context);
 
             // 変更したUV情報をTextureに保存(Applyを忘れずに!)
             processedTexture.SetPixels32(processedUVPixels);
