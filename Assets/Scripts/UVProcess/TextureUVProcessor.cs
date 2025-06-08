@@ -71,6 +71,7 @@ namespace VAT
             deltaBuffer.DeltaBuffer.Update(currentTime);
 
             savedUVPixels.CopyTo(pixelsCache, 0);
+            savedUVPixels.CopyTo(processedUVPixels, 0);
 
             ProcessContext context = new ProcessContext()
             {

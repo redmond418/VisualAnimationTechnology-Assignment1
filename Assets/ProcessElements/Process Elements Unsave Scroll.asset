@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b329bd606d75247a380c1a1e8a2d9119, type: 3}
+  m_Name: Process Elements Unsave Scroll
+  m_EditorClassIdentifier: 
+  elements:
+  - rid: 4984271075532079191
+  references:
+    version: 2
+    RefIds:
+    - rid: 4984271075532079191
+      type: {class: UnsaveScrollProcessEvent, ns: VAT, asm: Assembly-CSharp}
+      data:
+        sourceColor: 0
+        velocity: {x: 1, y: 1}
+        center: 128
