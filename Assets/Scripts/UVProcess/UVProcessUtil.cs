@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace VAT
 {
     public static class UVProcessUtil
@@ -12,6 +14,11 @@ namespace VAT
             int mod = a % b;
             if (mod < 0) mod += b;
             return mod;
+        }
+
+        public static Vector2 Rotate2D(Vector2 vector, float angle, Vector2 centerPoint = default)
+        {
+            return (Vector2)(Quaternion.AngleAxis(angle, Vector3.forward) * (vector - centerPoint)) + centerPoint;
         }
     }
 }

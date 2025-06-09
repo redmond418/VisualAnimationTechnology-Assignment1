@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Process Elements Unsave Scroll
   m_EditorClassIdentifier: 
   elements:
-  - rid: 4984271075532079191
+  - rid: 4984271075532079195
   references:
     version: 2
     RefIds:
-    - rid: 4984271075532079191
-      type: {class: UnsaveScrollProcessEvent, ns: VAT, asm: Assembly-CSharp}
+    - rid: 4984271075532079195
+      type: {class: UnsaveRotateProcessElement, ns: VAT, asm: Assembly-CSharp}
       data:
         sourceColor: 0
-        velocity: {x: 1, y: 1}
+        centerPointRatio: {x: 0.5, y: 0.5}
+        angleSpeed: 1
         center: 128
