@@ -40,7 +40,7 @@ namespace VAT
     }
 
     [Serializable]
-    public class DeltaBufferContainer256
+    public class DeltaBufferContainer256 : ISerializationCallbackReceiver
     {
         [SerializeField] private int center = 128;
         [SerializeField] private float speed = 1;
@@ -56,6 +56,16 @@ namespace VAT
                 }
                 return deltaBuffer;
             }
+        }
+
+        public void OnAfterDeserialize()
+        {
+            deltaBuffer = null;
+        }
+
+        public void OnBeforeSerialize()
+        {
+            
         }
     }
 }
