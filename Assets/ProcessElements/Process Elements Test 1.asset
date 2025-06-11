@@ -21,6 +21,6 @@ MonoBehaviour:
       type: {class: UnsaveRotateProcessElement, ns: VAT, asm: Assembly-CSharp}
       data:
         sourceColor: 0
-        centerPointRatio: {x: 0.5, y: 0.5}
-        angleSpeed: 1
-        center: 128
+        centerPointRatio: {x: 0.42, y: 0.5}
+        angleSpeed: 0.4
+        center: 85

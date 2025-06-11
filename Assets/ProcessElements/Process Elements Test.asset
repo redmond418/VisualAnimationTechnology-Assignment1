@@ -32,7 +32,7 @@ MonoBehaviour:
       type: {class: StepScrollProcessElement, ns: VAT, asm: Assembly-CSharp}
       data:
         sourceColor: 0
-        scrollAxis: 0
+        scrollAxis: 1
         deltaBuffer:
           center: 128
           speed: 0.1
