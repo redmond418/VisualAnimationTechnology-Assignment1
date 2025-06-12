@@ -112,6 +112,12 @@ namespace VAT
         public void ChangeElements(ProcessElementsGroup processElementsGroup)
         {
             this.processElementsGroup = processElementsGroup;
+            SaveCurrentTexture();
+        }
+
+        public void SaveCurrentTexture()
+        {
+            processedUVPixels.CopyTo(savedUVPixels, 0);
             processElementsGroup.ResetTimeAll(Time.time);
         }
     }
