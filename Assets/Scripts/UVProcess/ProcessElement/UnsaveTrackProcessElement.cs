@@ -8,6 +8,7 @@ namespace VAT
     {
         [SerializeField] private RGBA sourceColorX = RGBA.Red;
         [SerializeField] private RGBA sourceColorY = RGBA.Green;
+        [SerializeField] private bool sampleSavedUV = false;
 
         private float originTime;
 
@@ -22,7 +23,12 @@ namespace VAT
                     int mappedX = context.sourcePixels[originIndex][(int)sourceColorX];
                     int mappedY = context.sourcePixels[originIndex][(int)sourceColorY];
                     int uvIndex;
-                    if (mappedX == 0 && mappedY == 0) uvIndex = originIndex;
+                    Color32[] samplePixels = sampleSavedUV ? context.savedUVPixels : context.processedUVPixels;
+                    if (mappedX == 0 && mappedY == 0)
+                    {
+                        uvIndex = originIndex;
+                        samplePixels = context.processedUVPixels;
+                    }
                     else
                     {
                         // (0, 0)との区別のため1ずらしていた値を戻す
@@ -30,7 +36,7 @@ namespace VAT
                         mappedY -= 1;
                         uvIndex = UVProcessUtil.XYToIndex(mappedX, mappedY, context.textureWidth, context.textureHeight);
                     }
-                    context.pixelsCache[originIndex] = context.processedUVPixels[uvIndex];
+                    context.pixelsCache[originIndex] = samplePixels[uvIndex];
                 }
             }
             context.CacheToProcessedUV();
