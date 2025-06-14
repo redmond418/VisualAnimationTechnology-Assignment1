@@ -41,6 +41,8 @@ namespace VAT
             material.SetVector("_LeftTop", screenLeftTop);
             material.SetVector("_RightTop", screenRightTop);
             material.SetVector("_Size", mainCam.pixelRect.size);
+            material.SetVector("_UVMin", mainCam.rect.min);
+            material.SetVector("_UVMax", mainCam.rect.max);
         }
     }
 }
