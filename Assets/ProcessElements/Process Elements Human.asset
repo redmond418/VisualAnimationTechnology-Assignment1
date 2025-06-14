@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b329bd606d75247a380c1a1e8a2d9119, type: 3}
-  m_Name: Process Elements Test 1
+  m_Name: Process Elements Human
   m_EditorClassIdentifier: 
   elements:
-  - rid: 4984271143808270423
+  - rid: 4984271213447610631
   references:
     version: 2
     RefIds:
-    - rid: 4984271143808270423
-      type: {class: UnsaveRotateProcessElement, ns: VAT, asm: Assembly-CSharp}
+    - rid: 4984271213447610631
+      type: {class: UnsaveTrackProcessElement, ns: VAT, asm: Assembly-CSharp}
       data:
-        sourceColor: 0
-        centerPointRatio: {x: 0.42, y: 0.5}
-        angleSpeed: 0.4
-        center: 85
+        sourceColorX: 0
+        sourceColorY: 1

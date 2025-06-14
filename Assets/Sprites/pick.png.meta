@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 853fe481aa14b41f4b0b7245bc390a7f
+guid: 6cc07ab7daf0e49eca68b9b11ff4844f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4886186730580554898
-    second: pinch index_0
+      213: -195602406138073655
+    second: pick_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pinch index_0
+      name: pick_0
       rect:
         serializedVersion: 2
-        x: 62
-        y: 110
-        width: 291
-        height: 287
+        x: 142
+        y: 121
+        width: 245
+        height: 288
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2943b7e71f83fc340800000000000000
-      internalID: 4886186730580554898
+      spriteID: 9cdade0e5a4194df0800000000000000
+      internalID: -195602406138073655
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      pinch index_0: 4886186730580554898
+      pick_0: -195602406138073655
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
