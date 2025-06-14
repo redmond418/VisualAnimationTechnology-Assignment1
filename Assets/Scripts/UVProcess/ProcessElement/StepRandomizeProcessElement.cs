@@ -17,12 +17,15 @@ namespace VAT
                 {
                     int originIndex = i + j * context.textureWidth;
                     Color32 uv = context.processedUVPixels[originIndex];
-                    if (Random.Range(0, 256) < context.sourcePixels[originIndex][(int)sourceColor]) uv = new((byte)Random.Range(0, 256), (byte)Random.Range(0, 256), 0, 255);
+                    if (Random.Range(0, 256) < context.sourcePixels[originIndex][(int)sourceColor])
+                    {
+                        uv = new((byte)Random.Range(0, 256), (byte)Random.Range(0, 256), 0, 255);
+                        context.savedUVPixels[originIndex] = uv;
+                    }
                     context.pixelsCache[originIndex] = uv;
                 }
             }
             context.CacheToProcessedUV();
-            context.SaveUV();
         }
 
         public void ResetTime(float currentTime)

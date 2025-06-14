@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elements:
   - rid: 4984271213447610653
+  - rid: 4984271213447610654
   references:
     version: 2
     RefIds:
@@ -22,3 +23,7 @@ MonoBehaviour:
       data:
         sourceColorX: 0
         sourceColorY: 1
+    - rid: 4984271213447610654
+      type: {class: StepRandomizeProcessElement, ns: VAT, asm: Assembly-CSharp}
+      data:
+        sourceColor: 2
