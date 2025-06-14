@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b329bd606d75247a380c1a1e8a2d9119, type: 3}
+  m_Name: Process Elements Motion 4
+  m_EditorClassIdentifier: 
+  elements:
+  - rid: 4984271213447610655
+  - rid: 4984271213447610656
+  references:
+    version: 2
+    RefIds:
+    - rid: 4984271213447610655
+      type: {class: StepWaveProcessElement, ns: VAT, asm: Assembly-CSharp}
+      data:
+        sourceColor: 2
+        waveAxis: 0
+        waveSpeed: 0.4
+        waveScale: 1.7
+        deltaBuffers:
+          center: 0
+          speed: 0.1
+    - rid: 4984271213447610656
+      type: {class: UnsaveTrackProcessElement, ns: VAT, asm: Assembly-CSharp}
+      data:
+        sourceColorX: 0
+        sourceColorY: 1
