@@ -13,23 +13,13 @@ MonoBehaviour:
   m_Name: Process Elements Motion 4
   m_EditorClassIdentifier: 
   elements:
-  - rid: 4984271213447610655
   - rid: 4984271213447610656
   references:
     version: 2
     RefIds:
-    - rid: 4984271213447610655
-      type: {class: StepWaveProcessElement, ns: VAT, asm: Assembly-CSharp}
-      data:
-        sourceColor: 2
-        waveAxis: 0
-        waveSpeed: 0.4
-        waveScale: 1.7
-        deltaBuffers:
-          center: 0
-          speed: 0.1
     - rid: 4984271213447610656
       type: {class: UnsaveTrackProcessElement, ns: VAT, asm: Assembly-CSharp}
       data:
         sourceColorX: 0
         sourceColorY: 1
+        sampleSavedUV: 0
